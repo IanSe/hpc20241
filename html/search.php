@@ -34,7 +34,7 @@ if (empty($_GET["ml"])) {
           $ans[12] = $fila['Res13'];
           $ans[13] = $fila['Res14'];
           $result = $fila['result'];
-          
+
       }
       for($i=0;$i<14;$i++){
         if($ans[$i] == 3){
@@ -60,14 +60,14 @@ if (empty($_GET["ml"])) {
   </head>
   <body>
     <div class="testbox">
-      <form action="search" method="get">
+      <form action="search.php" method="get">
         <div class="banner">
             <?php if($control == 1): ?>
                 <h1>Escribe por favor el correo que usaste para buscar tus resultados, en caso de no encontrarlos seras redireccionado al form de nuevo para volver a hacerlo</h1>
-            <?php elseif($control != 0 && $control != 0): ?> 
+            <?php elseif($control != 0 && $control != 0): ?>
                 <h1>Hola <?= $name ?> a continuacion te mostraremos tus resultados
                 Segun los datos que pusiste determinamos que el tipo de arquitectura que necesita tu empresa es <b><?= $result ?></b></h1>
-            <?php endif; ?> 
+            <?php endif; ?>
         </div>
         <br/>
         <p>
@@ -80,9 +80,9 @@ if (empty($_GET["ml"])) {
             <div class="btn-block">
                 <input type="submit" value="Buscar"></input>
             </div>
-            <?php elseif($control != 1 && $control != 0): ?> 
-                Aqui se muestra la hoja de respuesta que contestaste 
-            <?php endif; ?> 
+            <?php elseif($control != 1 && $control != 0): ?>
+                Aqui se muestra la hoja de respuesta que contestaste
+            <?php endif; ?>
         </center>
         </p>
         <br/>

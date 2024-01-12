@@ -2,24 +2,23 @@
 // Definir las variables con vadenas vacias
 $nameErr = $emailErr =  $cmpErr = "";
 $name = $email = $cmp = "";
-$ans = array(0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+$ans = array(0);
 $sum = 0;
 $result = array("Privada", "Publica", "Hibrida");
 $ansres = $result[0];
-	
-//Llamamos a la conexion a la base de datos 
+//Llamamos a la conexion a la base de datos
 require('./../conn/conn.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-  
-  if (empty($_GET["fname"])) {    
-	  $nameErr = "El nombre es requerido";
+
+  if (empty($_GET["fname"])) {
+          $nameErr = "El nombre es requerido";
   } else {
     $fname = test_input($_GET["fname"]);
     $last = test_input($_GET['lname']);
     $name = $fname.' '.$last;
   }
-  
+
   if (empty($_GET["eaddress"])) {
     $emailErr = "El correo es requerido";
   } else {
@@ -37,16 +36,16 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
   }
 
   if(!empty($_GET["question1"])){
-    $ans = array();
     for($i=0;$i<14;$i++){
-      $ans[$i] = $_GET["question".$i+1];
+      $subtext = "question".($i+1);
+      $ans[$i] = $_GET[$subtext];
       $sum += $ans[$i];
     }
     if($sum>=14 && $sum<= 23){
       $ansres = $result[2];
     }
     else if($sum>=24 && $sum<= 28){
-      $ansres = $result[2];
+      $ansres = $result[1];
     }
     else if($sum>28){
       $ansres = $result[0];
@@ -54,20 +53,20 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
   }
 
   if($name != "" && $ans[0] != 0){
-	$sql = "INSERT INTO empresa(user, company, mail, Res1, Res2, Res3, Res4, Res5, Res6, Res7, Res8, Res9, Res10, Res11, Res12, Res13, Res14, ResSumTot, result) VALUES
-    	('".$name."', '".$cmp."', '".$email."','".$ans[0]."','".$ans[1]."','".$ans[2]."','".$ans[3]."','".$ans[4]."','".$ans[5]."','".$ans[6]."','".$ans[7]."','".$ans[8]."','".$ans[9]."','".$ans[10]."','".$ans[11]."','".$ans[12]."','".$ans[13]."','".$sum."','".$ansres."')";
-  echo $sql;
-	if ($conn->query($sql) === TRUE) {
-    	header('Location: search?q=Registro hecho correctamente&ml='.$email);
-	} else {
-    	echo "Error: " . $sql . "<br>" . $conn->error;
-	}
+        $sql = "INSERT INTO empresa(user, company, mail, Res1, Res2, Res3, Res4, Res5, Res6, Res7, Res8, Res9, Res10, Res11, Res12, Res13, Res14, ResSumTot, result) VALUES
+        ('".$name."', '".$cmp."', '".$email."','".$ans[0]."','".$ans[1]."','".$ans[2]."','".$ans[3]."','".$ans[4]."','".$ans[5]."','".$ans[6]."','".$ans[7]."','".$ans[8]."','".$ans[9]."','".$ans[10]."','".$ans[11]."','".$ans[12]."','".$ans[13]."','".$sum."','".$ansres."')";
+        echo $sql;
+        if ($conn->query($sql) === TRUE) {
+        header('Location: search.php?q=Registro hecho correctamente&ml='.$email);
+        } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+        }
   }
 
 // Cerrar la conexión.
 $conn->close();
 }
-	
+
 function test_input($data) {
   $data = trim($data);
   $data = stripslashes($data);
@@ -86,13 +85,13 @@ function test_input($data) {
   </head>
   <body>
     <div class="testbox">
-      <form action="index" method="get">
+      <form action="index.php" method="get">
         <div class="banner">
           <h1>Contesta esta encuesta y descubre que tipo de nube necesita tu negocio</h1>
         </div>
         <br/>
         <p>
-        <center>Contesta la encuesta para descubrir que tipo de nube necesitas en tu empresa, si ya haz contestado previamente puedes consultar <a href="./search"> tus resultados aqui </a>
+        <center>Contesta la encuesta para descubrir que tipo de nube necesitas en tu empresa, si ya haz contestado previamente puedes consultar <a href="./search.php"> tus resultados aqui </a>
         </center>
         </p>
         <br/>
